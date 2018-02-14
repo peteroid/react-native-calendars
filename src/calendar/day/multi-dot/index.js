@@ -76,6 +76,7 @@ class Day extends Component {
           {validDots.map(dot => {
             return (
               <View key={dot.key} style={[baseDotStyle,
+                { marginTop: 0 },
                 { backgroundColor: marking.selected && dot.selectedDotColor ? dot.selectedDotColor : dot.color }]} />
             );
           })}
@@ -83,7 +84,10 @@ class Day extends Component {
           {areDotsOverflow ? (
             <Text
               style={{
-                fontSize: 7,
+                fontSize: 8,
+                height: 5,
+                width: 5,
+                lineHeight: 6,
                 fontWeight: 'bold',
                 color: marking.selected ? '#fff' : '#ff723f',
                 backgroundColor: 'transparent'
