@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+  Platform,
   TouchableOpacity,
   Text,
   View
@@ -90,7 +91,13 @@ class Day extends Component {
                 lineHeight: 6,
                 fontWeight: 'bold',
                 color: marking.selected ? '#fff' : '#ff723f',
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
+                ...(Platform.select({
+                  android: {
+                    marginLeft: 1,
+                    height: 6,
+                  }
+                }))
               }}>+</Text>
           ) : null}
         </View>
