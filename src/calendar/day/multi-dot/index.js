@@ -62,13 +62,35 @@ class Day extends Component {
     const baseDotStyle = [this.style.dot, this.style.visibleDot];
     if (marking.dots && Array.isArray(marking.dots) && marking.dots.length > 0) {
       // Filter out dots so that we we process only those items which have key and color property
-      const validDots = marking.dots.filter(d => (d && d.key && d.color));
-      return validDots.map((dot, index) => {
-        return (
-          <View key={dot.key ? dot.key : index} style={[baseDotStyle, 
-            { backgroundColor: marking.selected && dot.selectedDotColor ? dot.selectedDotColor : dot.color}]}/>
-        );
-      });
+      const _validDots = marking.dots.filter(d => (d && d.color));
+      const areDotsOverflow = _validDots.length > 3
+      const validDots = areDotsOverflow ? _validDots.slice(0, 2) : _validDots
+
+      return (
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+          {validDots.map(dot => {
+            return (
+              <View key={dot.key} style={[baseDotStyle,
+                { backgroundColor: marking.selected && dot.selectedDotColor ? dot.selectedDotColor : dot.color }]} />
+            );
+          })}
+
+          {areDotsOverflow ? (
+            <Text
+              style={{
+                fontSize: 7,
+                fontWeight: 'bold',
+                color: marking.selected ? '#fff' : '#ff723f',
+                backgroundColor: 'transparent'
+              }}>+</Text>
+          ) : null}
+        </View>
+      )
     }
     return;
   }
@@ -87,10 +109,12 @@ class Day extends Component {
       textStyle.push(this.style.disabledText);
     } else if (this.props.state === 'today') {
       textStyle.push(this.style.todayText);
+    } else if (marking.textStyle) {
+      textStyle.push(marking.textStyle);
     }
     return (
       <TouchableOpacity style={containerStyle} onPress={this.onDayPress}>
-        <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
+        <Text style={textStyle}>{String(this.props.children)}</Text>
         <View style={{flexDirection: 'row'}}>{dot}</View>
       </TouchableOpacity>
     );
