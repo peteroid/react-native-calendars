@@ -61,6 +61,7 @@ class Day extends Component {
           {validDots.map(dot => {
             return (
               <View key={dot.key ? dot.key : index} style={[baseDotStyle,
+                { marginTop: 0 },
                 { backgroundColor: marking.selected && dot.selectedDotColor ? dot.selectedDotColor : dot.color }]} />
             );
           })}
